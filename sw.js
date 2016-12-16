@@ -1,10 +1,12 @@
 const APP_CACHE_NAME = 'rsspwa-v1';
-const DATA_CACHE_NAME = 'rsspwa-data';
+const DATA_CACHE_NAME = 'rsspwa-data-v1';
 
 const FILES_TO_CACHE = [
     '/',
     '/index.html',
-    '/main.js'
+    '/app.js',
+    '/css/bootstrap.min.css',
+    '/favicon/android-chrome-192x192.png'
 ];
 
 self.addEventListener('install', function(event) {
