@@ -53,7 +53,7 @@
         }
     }
 
-    var feed = 'http://www.lemonde.fr/rss/une.xml';
+    var feed = 'https://www.lemonde.fr/rss/une.xml';
     ajaxRequest(feed);
 }());
 
