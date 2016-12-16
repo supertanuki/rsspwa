@@ -30,15 +30,19 @@
         if (window.DOMParser) {
             var parser    = new DOMParser();
             var xmlDoc    = parser.parseFromString(rss, "text/xml");
-            var titleList = [];
+            var items = [];
             var html      = '';
 
             [].forEach.call(xmlDoc.getElementsByTagName("item"), function (element) {
-                titleList.push(element.getElementsByTagName('title')[0].textContent);
+                items.push({
+                    title: element.getElementsByTagName('title')[0].textContent,
+                    link: element.getElementsByTagName('link')[0].textContent,
+                    description: element.getElementsByTagName('description')[0].textContent
+                });
             });
 
-            for (let title of titleList) {
-                html += '<li>' + title + '</li>';
+            for (let item of items) {
+                html += '<li><h2><a href="' + item.link + '">' + item.title + '</a></h2><p>' + item.description +'</p></li>';
             }
 
             html = '<ul>' + html + '</ul>';
