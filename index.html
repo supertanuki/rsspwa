@@ -12,11 +12,24 @@
     <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
     <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#fd8e8e">
     <meta name="theme-color" content="#fd8e8e">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>RSS PWA</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="text-center">
+                <a href="/">
+                    <img src="/favicon/android-chrome-192x192.png" class="img-rounded"><br>
+                    RSS PWA
+                </a>
+            </h1>
+        </div>
+    </div>
 
-    <div id="app"></div>
+    <div class="container">
+        <div id="app"></div>
+    </div>
 
     <script src="/sw.js"></script>
     <script src="/app.js"></script>

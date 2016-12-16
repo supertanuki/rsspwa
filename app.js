@@ -42,10 +42,10 @@
             });
 
             for (let item of items) {
-                html += '<li><h2><a href="' + item.link + '">' + item.title + '</a></h2><p>' + item.description +'</p></li>';
+                html += '<li class="list-group-item"><h2><a href="' + item.link + '">' + item.title + '</a></h2><p>' + item.description +'</p></li>';
             }
 
-            html = '<ul>' + html + '</ul>';
+            html = '<ul class="list-group">' + html + '</ul>';
 
             document.getElementById('app').innerHTML = html;
         } else {
