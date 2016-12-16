@@ -36,9 +36,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
     console.log('[Service Worker] Fetch', event.request.url);
 
-    var myApp = 'http://127.0.0.1:8887';
-
-    if (event.request.url.indexOf(myApp) > -1) {
+    if (event.request.url.indexOf(self.registration.scope) === 0) {
         /*
          * The app is asking for app shell files. In this scenario the app uses the
          * "Cache, falling back to the network" offline strategy:
