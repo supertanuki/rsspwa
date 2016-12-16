@@ -1,7 +1,7 @@
-var appCacheName = 'rsspwa-v1';
-var dataCacheName = 'rsspwa-data';
+const APP_CACHE_NAME = 'rsspwa-v1';
+const DATA_CACHE_NAME = 'rsspwa-data';
 
-var filesToCache = [
+const FILES_TO_CACHE = [
     '/',
     '/index.html',
     '/main.js'
@@ -9,9 +9,9 @@ var filesToCache = [
 
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open(appCacheName).then(function(cache) {
+        caches.open(APP_CACHE_NAME).then(function(cache) {
             console.log('[ServiceWorker] Caching app shell');
-            return cache.addAll(filesToCache);
+            return cache.addAll(FILES_TO_CACHE);
         })
     );
 });
@@ -22,7 +22,7 @@ self.addEventListener('activate', function(event) {
     event.waitUntil(
         caches.keys().then(function(keyList) {
             return Promise.all(keyList.map(function(key) {
-                if (key !== appCacheName && key !== dataCacheName) {
+                if (key !== APP_CACHE_NAME && key !== DATA_CACHE_NAME) {
                     console.log('[ServiceWorker] Removing old cache', key);
                     return caches.delete(key);
                 }
@@ -51,14 +51,14 @@ self.addEventListener('fetch', function(event) {
         );
     } else {
         /*
-         * When the request URL contains dataUrl, the app is asking for fresh
-         * weather data. In this case, the service worker always goes to the
+         * When the request URL is not an internal scope, the app is asking for
+         * fresh data. In this case, the service worker always goes to the
          * network and then caches the response. This is called the "Cache then
          * network" strategy:
          * https://jakearchibald.com/2014/offline-cookbook/#cache-then-network
          */
         event.respondWith(
-            caches.open(dataCacheName).then(function(cache) {
+            caches.open(DATA_CACHE_NAME).then(function(cache) {
                 return fetch(event.request).then(function(response) {
                     cache.put(event.request.url, response.clone());
                     return response;
