@@ -6,7 +6,8 @@ A Progressive Web App RSS reader with offline features ! 📵
 
 ## Credits
 
-Rss2json API, a great alternative to deprecated Google Feed API [https://rss2json.com](https://rss2json.com)
+To read RSS by JavaScript and avoid CORS (Cross-origin resource sharing)
+we use YUI, the Yahoo User Interface Library, an alternative to deprecated Google Feed API [https://github.com/yui/yui3](https://github.com/yui/yui3)
 
 Logo made with [https://logomakr.com](https://logomakr.com)
 
