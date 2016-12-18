@@ -9,10 +9,13 @@
 
     function getFeed(url)
     {
-        YUI().use('yql', function(Y){
-            Y.YQL('select * from rss(0,10) where url = "' + url + '"', function(result) {
+        YUI().use('yql', function(Y) {
+            var query = new Y.YQLRequest('select * from rss(0,10) where url = "' + url + '"', function(result) {
                 showPosts(result.query.results);
-            })
+            }, {}, {
+                proto: 'https' // Connect using SSL
+            });
+            query.send();
         });
     }
 
