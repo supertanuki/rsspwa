@@ -7,32 +7,57 @@
         });
     }
 
-    function getFeed(url)
-    {
-        YUI().use('yql', function(Y) {
-            var query = new Y.YQLRequest('select * from rss(0,10) where url = "' + url + '"', function(result) {
-                showPosts(result.query.results);
-            }, {}, {
-                proto: 'https' // Connect using SSL
+    function get(url) {
+        ajaxRequest(url);
+    }
+
+    function ajaxRequest(url) {
+        var request = new XMLHttpRequest();
+
+        request.onloadend = function () {
+            if (request.readyState === XMLHttpRequest.DONE) {
+                if (request.status === 200) {
+                    showPosts(request.response);
+                }
+            }
+        };
+
+        request.onerror = function () {
+            console.log(request.readyState);
+        };
+
+        request.open('GET', url);
+        request.send();
+    }
+
+    function showPosts(rss) {
+        if (window.DOMParser) {
+            var parser    = new DOMParser();
+            var xmlDoc    = parser.parseFromString(rss, "text/xml");
+            var items = [];
+            var html      = '';
+
+            [].forEach.call(xmlDoc.getElementsByTagName("item"), function (element) {
+                items.push({
+                    title: element.getElementsByTagName('title')[0].textContent,
+                    link: element.getElementsByTagName('link')[0].textContent,
+                    description: element.getElementsByTagName('description')[0].textContent
+                });
             });
-            query.send();
-        });
-    }
 
-    function showPosts(rss)
-    {
-        var html = '';
+            for (let item of items) {
+                html += '<li class="list-group-item"><h2><a href="' + item.link + '">' + item.title + '</a></h2><p>' + item.description +'</p></li>';
+            }
 
-        for (let post of rss.item) {
-            html += '<li class="list-group-item"><h2><a href="' + post.link + '">' + post.title + '</a></h2></li>';
+            html = '<ul class="list-group">' + html + '</ul>';
+
+            document.getElementById('app').innerHTML = html;
+        } else {
+            console.log('method not supported');
         }
-
-        html = '<ul class="list-group">' + html + '</ul>';
-
-        document.getElementById('app').innerHTML = html;
     }
 
-    var feed = 'https://blog.elao.com/fr/index.xml';
-    getFeed(feed);
+    var feed = 'http://www.guadeloupe.franceantilles.fr/rss/lea_Une.xml';
+    get(feed);
 }());
 
